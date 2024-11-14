@@ -26,9 +26,9 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "user_distributor",
+            name = "user_subscription",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "distributor_id")
+            inverseJoinColumns = @JoinColumn(name = "subscription_id")
     )
-    private Set<Distributor> distributors;
+    private Set<Subscription> subscriptions;
 }

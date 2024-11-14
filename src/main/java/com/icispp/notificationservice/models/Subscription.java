@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Distributor {
+public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,6 @@ public class Distributor {
     @JoinColumn(name = "manager_id")
     private Manager manager;
 
-    @ManyToMany(mappedBy = "distributors")
+    @ManyToMany(mappedBy = "subscriptions")
     private Set<User> users;
 }

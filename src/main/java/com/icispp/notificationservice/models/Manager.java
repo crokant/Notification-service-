@@ -25,5 +25,5 @@ public class Manager {
     private String email;
 
     @OneToMany(mappedBy = "manager")
-    private Set<Distributor> distributors;
+    private Set<Subscription> subscriptions;
 }
