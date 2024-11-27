@@ -23,11 +23,11 @@ buildSrc/build
 /spring-*/build
 /framework-*/build
 /integration-tests/build
-/src/asciidoc/build
+/backend/src/asciidoc/build
 spring-test/test-output/
 
 # Maven artifacts
-pom.xml
+backend/pom.xml
 /target/
 
 # Eclipse artifacts, including WTP generated manifests
@@ -53,3 +53,5 @@ atlassian-ide-plugin.xml
 cached-antora-playbook.yml
 
 node_modules
+
+backend/target
