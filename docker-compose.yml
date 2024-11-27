@@ -1,0 +1,32 @@
+version: '1.0'
+
+services:
+  # Backend сервис
+  backend:
+
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080" # Пробрасываем порт 8080 для Spring
+    networks:
+      - mynetwork
+    depends_on:
+      - frontend
+    environment:
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: docker # Указываем активный профиль для Spring
+
+  # Frontend сервис
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80" # Пробрасываем порт 80 для Nginx
+    networks:
+      - mynetwork
+    environment:
+      REACT_APP_API_URL: "http://backend:8080" # Указываем URL backend для взаимодействия с React
+
+networks:
+  mynetwork:
+    driver: bridge

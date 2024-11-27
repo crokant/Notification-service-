@@ -30,6 +30,11 @@ public class MainController {
         this.userService = userService;
     }
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
+
     @PostMapping("/managers/{managerId}/createSubscription")
     public Subscription createSubscription(@PathVariable Long managerId, @RequestParam String subscriptionName) {
         Manager manager = managerService.findById(managerId)
