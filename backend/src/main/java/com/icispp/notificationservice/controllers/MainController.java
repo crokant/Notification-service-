@@ -7,9 +7,13 @@ import com.icispp.notificationservice.services.MessageService;
 import com.icispp.notificationservice.services.SubscriptionService;
 import com.icispp.notificationservice.services.ManagerService;
 import com.icispp.notificationservice.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -21,6 +25,9 @@ public class MainController {
     private final ManagerService managerService;
     private final UserService userService;
 
+
+    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+
     @Autowired
     public MainController(SubscriptionService subscriptionService, MessageService messageService,
                           ManagerService managerService, UserService userService) {
@@ -31,8 +38,15 @@ public class MainController {
     }
 
     @GetMapping("/hello")
-    public String hello(){
-        return "hello";
+    public Map<String, String> hello(@RequestHeader(value = "Origin", required = false) String origin) {
+        logger.info("Received request from origin: {}", origin);
+
+        // Создаём JSON-ответ
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Hello from the server!");
+        response.put("origin", origin != null ? origin : "unknown");
+
+        return response;
     }
 
     @PostMapping("/managers/{managerId}/createSubscription")
