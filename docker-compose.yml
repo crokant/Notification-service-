@@ -7,7 +7,7 @@ services:
     build:
       context: ./backend
     ports:
-      - "8080:8080" # Пробрасываем порт 8080 для Spring
+      - "8080:8080"
     networks:
       - mynetwork
     depends_on:
@@ -25,7 +25,7 @@ services:
     networks:
       - mynetwork
     environment:
-      REACT_APP_API_URL: "http://backend:8080" # Указываем URL backend для взаимодействия с React
+      REACT_APP_API_URL: "http://localhost:8080" # Указываем URL backend для взаимодействия с React
 
 networks:
   mynetwork:
