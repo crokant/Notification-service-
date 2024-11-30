@@ -27,7 +27,7 @@ buildSrc/build
 spring-test/test-output/
 
 # Maven artifacts
-backend/pom.xml
+
 /target/
 
 # Eclipse artifacts, including WTP generated manifests
