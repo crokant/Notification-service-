@@ -12,7 +12,7 @@ RUN mvn dependency:resolve
 COPY src ./src
 
 # Собираем проект с помощью Maven (создаем JAR файл)
-RUN mvn clean install
+RUN mvn clean install -X
 
 # Этап продакшн: используем OpenJDK 17 для выполнения приложения
 FROM openjdk:17-jdk-slim

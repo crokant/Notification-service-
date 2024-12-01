@@ -13,7 +13,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost", "http://localhos:80") // Разрешённые источники
+                        .allowedOrigins("http://localhost", "http://localhost:80") // Разрешённые источники
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
             }
         };
