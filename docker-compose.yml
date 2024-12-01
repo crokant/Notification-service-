@@ -1,31 +1,48 @@
-version: '1.0'
+version: '2.2'
 
 services:
   # Backend сервис
   backend:
-
     build:
       context: ./backend
     ports:
-      - "8080:8080"
+      - "8081:8080"
     networks:
       - mynetwork
     depends_on:
       - frontend
+      - postgres
     environment:
       SERVER_PORT: 8080
-      SPRING_PROFILES_ACTIVE: docker # Указываем активный профиль для Spring
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/NS_db
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      POSTGRES_USER: SA
+      POSTGRES_PASSWORD: 'password'
 
   # Frontend сервис
   frontend:
     build:
       context: ./frontend
     ports:
-      - "80:80" # Пробрасываем порт 80 для Nginx
+      - "81:80" # Пробрасываем порт 80 для Nginx
     networks:
       - mynetwork
     environment:
       REACT_APP_API_URL: "http://localhost:8080" # Указываем URL backend для взаимодействия с React
+
+  # PostgreSQL сервис
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    networks:
+      - mynetwork
+    environment:
+      POSTGRES_DB: NS_db
+      POSTGRES_USER: SA
+      POSTGRES_PASSWORD: 'password'
 
 networks:
   mynetwork:
