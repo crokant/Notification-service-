@@ -1,47 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
+import ApiDocumentation from "./components/ApiDocumentation";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import './App.css';
 
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
-
-function App() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(`${apiUrl}/api/hello`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
-
-  return (
-      <div className="App">
-        {loading ? (
-            <p>Loading...</p>
-        ) : error ? (
-            <p>Error: {error}</p>
-        ) : (
-            data && (
-                <div>
-                  <p>Message: {data.message}</p>
-                  <p>Origin: {data.origin}</p>
-                </div>
-            )
-        )}
-      </div>
-  );
+const App = () => {
+    return (
+        <Router>
+            <div className="navbar">
+                <nav>
+                    <ul className="nav-links">
+                        <li>
+                            <Link to="/hello">Главная</Link>
+                        </li>
+                        <li>
+                            <Link to="/about">О нас</Link>
+                        </li>
+                        <li>
+                            <Link to="/api">Документация API</Link>
+                        </li>
+                    </ul>
+                    <ul className="auth-links">
+                        <li>
+                            <Link to="/login">Вход</Link>
+                        </li>
+                        <li>
+                            <Link to="/register">Регистрация</Link>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/hello" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/api" element={<ApiDocumentation />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

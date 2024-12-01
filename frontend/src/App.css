@@ -1,38 +1,112 @@
-.App {
+.hello-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.api-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+h1 {
+  color: #007bff;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  margin-top: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+li {
+  margin: 10px 0;
+}
+
+.register-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
   color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background-color: #0056b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+p {
+  text-align: left;
+}
+.navbar {
+  background-color: #007bff; /* Синий цвет фона */
+  padding: 10px; /* Отступы вокруг меню */
+}
+
+nav {
+  max-width: 800px; /* Максимальная ширина меню */
+  height: 50px;
+  margin: auto; /* Центрирование меню */
+  display: flex; /* Используем Flexbox для расположения элементов */
+  justify-content: space-between; /* Разделяем элементы по краям */
+  align-items: center; /* Выравнивание по центру по вертикали */
+}
+
+.nav-links, .auth-links {
+  list-style-type: none; /* Убираем маркеры списка */
+  padding: 0; /* Убираем отступы */
+  display: flex; /* Используем Flexbox для расположения элементов в строку */
+}
+
+.nav-links li, .auth-links li {
+  margin-right: 15px; /* Отступ между элементами */
+}
+
+nav a {
+  text-decoration: none; /* Убираем подчеркивание */
+  color: white; /* Цвет текста ссылок */
+}
+
+nav a:hover {
+  text-decoration: underline; /* Подчеркивание при наведении */
 }
