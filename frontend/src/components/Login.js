@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
 import '../App.css'; // Импортируем стили
 
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Здесь вы можете добавить логику для проверки данных на сервере
-        if (email && password) {
-            setMessage('Вход успешен!'); // Пример успешного сообщения
+
+        if (username && password) {
+            try {
+                const response = await fetch(`${apiUrl}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: username, password: password }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setMessage(data);
+                } else {
+                    const errorData = await response.json();
+                    setMessage(errorData.message || 'Ошибка входа. Пожалуйста, проверьте свои учетные данные.');
+                }
+            } catch (error) {
+                setMessage('Ошибка сети. Пожалуйста, попробуйте позже.');
+            }
         } else {
             setMessage('Пожалуйста, заполните все поля.');
         }
@@ -22,11 +42,11 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>
-                        Email:
+                        Имя пользователя:
                         <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                     </label>

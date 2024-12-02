@@ -30,7 +30,7 @@ services:
     networks:
       - mynetwork
     environment:
-      REACT_APP_API_URL: "http://localhost:8080" # Указываем URL backend для взаимодействия с React
+      REACT_APP_API_URL: "http://localhost:8080"
 
   # PostgreSQL сервис
   postgres:
