@@ -1,4 +1,4 @@
 package com.icispp.notificationservice.controllers;
 
-public class AuthContoller {
+public class RegisterController {
 }

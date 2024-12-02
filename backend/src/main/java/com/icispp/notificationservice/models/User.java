@@ -25,6 +25,8 @@ public class User {
 
     private String phoneNumber;
 
+    private String password;
+
     @ManyToMany
     @JoinTable(
             name = "user_subscription",
