@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import '../App.css'; // Импортируем стили
+import axios from 'axios';
+import '../App.css';
+
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -8,14 +11,33 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setMessage('Пароли не совпадают');
             return;
         }
-        // Здесь вы можете добавить логику для отправки данных на сервер
-        setMessage('Регистрация успешна!'); // Пример успешного сообщения
+
+        const userData = {
+            name: username,
+            email: email,
+            password: password,
+        };
+
+        try {
+            console.log(userData);
+            const response = await axios.post(`${apiUrl}/register`, userData);
+            setMessage(response.data); // Успешное сообщение от сервера
+        } catch (error) {
+            // Обработка ошибок
+            if (error.response) {
+                // Сервер ответил с кодом ошибки
+                setMessage(error.response.data || 'Ошибка регистрации');
+            } else {
+                // Ошибка сети или другая ошибка
+                setMessage('Ошибка сети. Попробуйте позже.');
+            }
+        }
     };
 
     return (
