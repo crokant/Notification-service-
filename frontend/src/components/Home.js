@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
-
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 function Home() {

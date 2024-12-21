@@ -5,6 +5,8 @@ import About from './components/About';
 import ApiDocumentation from "./components/ApiDocumentation";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import PersonalOffice from "./components/PersonalOffice";
+
 import './App.css';
 
 const App = () => {
@@ -40,6 +42,7 @@ const App = () => {
                 <Route path="/api" element={<ApiDocumentation />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/personal-office" element={<PersonalOffice />} />
             </Routes>
         </Router>
     );
