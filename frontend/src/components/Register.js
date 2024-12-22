@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
 
@@ -11,6 +12,8 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -18,30 +21,21 @@ const Register = () => {
             return;
         }
 
-        const userData = {
-            name: username,
-            email: email,
-            password: password,
-        };
+        const userData = { username: username, email, password };
 
         try {
-            console.log(userData);
             const response = await axios.post(`${apiUrl}/register`, userData);
-            setMessage(response.data); // Успешное сообщение от сервера
-        } catch (error) {
-            // Обработка ошибок
-            if (error.response) {
-                // Сервер ответил с кодом ошибки
-                setMessage(error.response.data || 'Ошибка регистрации');
-            } else {
-                // Ошибка сети или другая ошибка
-                setMessage('Ошибка сети. Попробуйте позже.');
+            if (response.status === 200) {
+                setMessage(response.data);
+                //navigate('/personal-office'); // Перенаправление в личный кабинет
             }
+        } catch (error) {
+            setMessage(error.response?.data || 'Ошибка регистрации');
         }
     };
 
     return (
-        <div className="register-container">
+        <div className="container">
             <h1>Регистрация</h1>
             <form onSubmit={handleSubmit}>
                 <div>

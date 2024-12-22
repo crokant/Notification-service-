@@ -29,6 +29,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void registerUser(String username, String email, String password) {
+        User user = new User();
+        user.setName(username);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
     public Optional<User> findByName(String name) {
         return userRepository.findByName(name);
     }

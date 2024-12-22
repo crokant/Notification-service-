@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import '../App.css'; // Импортируем стили
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext'; // Импортируем контекст
+import '../App.css';
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
@@ -7,10 +9,11 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+    const { setIsAuthenticated } = useContext(AuthContext); // Получаем функцию для обновления состояния авторизации
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (username && password) {
             try {
                 const response = await fetch(`${apiUrl}/login`, {
@@ -18,15 +21,20 @@ const Login = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ username: username, password: password }),
+                    body: JSON.stringify({ username, password }),
                 });
 
-                if (response.ok) {
+                if (response.status === 200) {
                     const data = await response.json();
-                    setMessage(data);
+                    localStorage.setItem('token', data.token); // Сохраняем токен
+                    setIsAuthenticated(true); // Обновляем состояние авторизации
+                    setMessage('Вы успешно вошли!');
+                    navigate('/personal-office'); // Перенаправление в личный кабинет
+                } else if (response.status === 401) {
+                    const errorMessage = await response.text();
+                    setMessage('Ошибка входа. Сервер описал проблему так: ' + errorMessage);
                 } else {
-                    const errorData = await response.json();
-                    setMessage(errorData.message || 'Ошибка входа. Пожалуйста, проверьте свои учетные данные.');
+                    setMessage('Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.');
                 }
             } catch (error) {
                 setMessage('Ошибка сети. Пожалуйста, попробуйте позже.');
@@ -37,7 +45,7 @@ const Login = () => {
     };
 
     return (
-        <div className="register-container">
+        <div className="container">
             <h1>Вход</h1>
             <form onSubmit={handleSubmit}>
                 <div>
