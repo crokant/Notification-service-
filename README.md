@@ -1,5 +1,6 @@
 
-# Notification_Service
+# Сервис управления уведомлениями
+<img src="https://i.ibb.co/vzpc6RQ/c6b9ac5c-f494-4bfe-b1ce-5caf031092fd.webp" alt="Логотип" />
 
 ## Описание
 Notification_Service - это сервис для управления уведомлениями. 
