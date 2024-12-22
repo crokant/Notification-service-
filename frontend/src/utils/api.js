@@ -10,3 +10,13 @@ export const fetchWithAuth = (endpoint, options = {}) => {
         },
     });
 };
+
+export const postWithAuth = (endpoint, data) => {
+    return fetchWithAuth(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', // Указываем тип контента
+        },
+        body: JSON.stringify(data), // Преобразуем данные в JSON
+    });
+};

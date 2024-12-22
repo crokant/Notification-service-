@@ -1,14 +1,4 @@
-.hello-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-
-.api-container {
+.container {
   max-width: 800px;
   margin: auto;
   padding: 20px;
@@ -34,16 +24,6 @@ ul {
 
 li {
   margin: 10px 0;
-}
-
-.register-container {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
 }
 
 label {
@@ -109,4 +89,146 @@ nav a {
 
 nav a:hover {
   text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.office-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mailings-list,
+.create-mailing {
+  width: 48%; /* Две колонки с небольшим отступом */
+}
+
+.mailings-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.mailings-list li {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.create-mailing form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-mailing label {
+  margin-bottom: 10px;
+}
+
+.create-mailing input,
+.create-mailing textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Стили для textarea */
+.create-mailing textarea {
+  resize: vertical; /* Разрешаем изменять высоту только по вертикали */
+  min-height: 100px; /* Минимальная высота */
+  max-height: 200px; /* Максимальная высота */
+}
+
+.create-mailing button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-mailing button:hover {
+  background-color: #0056b3;
+}
+
+/* Стили для кнопки выхода */
+.logout-button {
+  margin-top: 20px;
+  width: auto; /* Убираем фиксированную ширину */
+  padding: 8px 16px; /* Уменьшаем отступы */
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px; /* Уменьшаем размер текста */
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.create-mailing input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+.home-container h1 {
+  color: #007bff;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.message-box {
+  background-color: #e9ecef;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.message-box p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+.cta-button.secondary {
+  background-color: #6c757d;
+}
+
+.cta-button.secondary:hover {
+  background-color: #5a6268;
 }
