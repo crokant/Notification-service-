@@ -54,7 +54,7 @@ function Home() {
             )}
 
             <div className="cta-buttons">
-                <Link to="/component" className="cta-button">
+                <Link to="/personal-office" className="cta-button">
                     Перейти в личный кабинет
                 </Link>
                 <a

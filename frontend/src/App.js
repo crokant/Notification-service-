@@ -9,6 +9,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import PersonalOffice from './components/PersonalOffice';
 import ProtectedRoute from "./components/ProtectedRoute";
+import Business from "./components/Business";
 import './App.css';
 
 const App = () => {
@@ -27,6 +28,9 @@ const App = () => {
                             <li>
                                 <Link to="/api">Документация API</Link>
                             </li>
+                            <li>
+                                <Link to="/business">Для бизнеса</Link>
+                            </li>
                         </ul>
                         <AuthLinks /> {/* Перемещаем логику авторизации в отдельный компонент */}
                     </nav>
@@ -37,9 +41,11 @@ const App = () => {
                     <Route path="/api" element={<ApiDocumentation />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/business" element={<Business />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path="/personal-office" element={<PersonalOffice />} />
                     </Route>
+
                 </Routes>
             </Router>
         </AuthProvider>
