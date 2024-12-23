@@ -1,6 +1,5 @@
 package com.icispp.notificationservice.services;
 
-import com.icispp.notificationservice.models.Manager;
 import com.icispp.notificationservice.models.Subscription;
 import com.icispp.notificationservice.models.User;
 import com.icispp.notificationservice.repositories.SubscriptionRepository;
@@ -23,16 +22,8 @@ public class SubscriptionService {
         return subscriptionRepository.findById(id);
     }
 
-    public Subscription createSubscription(String name, Manager manager) {
-        Subscription subscription = Subscription.builder()
-                .name(name)
-                .manager(manager)
-                .build();
-        return subscriptionRepository.save(subscription);
-    }
-
     public Subscription addUserToSubscription(User user, Subscription subscription) {
-        subscription.getUsers().add(user);
+        subscription.getSubscribers().add(user);
         return subscriptionRepository.save(subscription);
     }
 }

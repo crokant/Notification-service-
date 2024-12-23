@@ -1,6 +1,5 @@
 package com.icispp.notificationservice.controllers;
 
-import com.icispp.notificationservice.models.Manager;
 import com.icispp.notificationservice.models.Subscription;
 import com.icispp.notificationservice.models.User;
 import com.icispp.notificationservice.services.SubscriptionService;
@@ -17,12 +16,12 @@ public class SubscriptionController {
     public SubscriptionController(SubscriptionService subscriptionService) {
         this.subscriptionService = subscriptionService;
     }
-
+/*
     @PostMapping("/create")
     public Subscription createSubscription(@RequestParam String name, @RequestParam Manager manager) {
         return subscriptionService.createSubscription(name, manager);
     }
-
+*/
     @PostMapping("/addUser")
     public Subscription addUserToSubscription(@RequestParam User user, @RequestParam Subscription subscription) {
         return subscriptionService.addUserToSubscription(user, subscription);

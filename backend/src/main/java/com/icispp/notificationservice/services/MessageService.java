@@ -34,6 +34,6 @@ public class MessageService {
     }
 
     public void sendMessageToSubscribers(String subject, String content, Subscription subscription) {
-        subscription.getUsers().forEach(user -> sendMessageToUser(subject, content, user, subscription));
+        subscription.getSubscribers().forEach(user -> sendMessageToUser(subject, content, user, subscription));
     }
 }

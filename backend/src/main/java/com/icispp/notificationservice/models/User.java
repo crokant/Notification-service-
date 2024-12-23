@@ -10,6 +10,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "app_user")
 public class User {
 
@@ -26,6 +27,9 @@ public class User {
     private String phoneNumber;
 
     private String password;
+
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private Set<Subscription> createdSubscriptions;
 
     @ManyToMany
     @JoinTable(
