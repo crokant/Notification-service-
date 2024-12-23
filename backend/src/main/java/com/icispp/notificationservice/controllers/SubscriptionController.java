@@ -16,12 +16,12 @@ public class SubscriptionController {
     public SubscriptionController(SubscriptionService subscriptionService) {
         this.subscriptionService = subscriptionService;
     }
-/*
+
     @PostMapping("/create")
-    public Subscription createSubscription(@RequestParam String name, @RequestParam Manager manager) {
-        return subscriptionService.createSubscription(name, manager);
+    public Subscription createSubscription(@RequestParam String name, @RequestParam User creator) {
+        return subscriptionService.createSubscription(name, creator);
     }
-*/
+
     @PostMapping("/addUser")
     public Subscription addUserToSubscription(@RequestParam User user, @RequestParam Subscription subscription) {
         return subscriptionService.addUserToSubscription(user, subscription);

@@ -26,4 +26,12 @@ public class SubscriptionService {
         subscription.getSubscribers().add(user);
         return subscriptionRepository.save(subscription);
     }
+
+    public Subscription createSubscription(String name, User creator) {
+        Subscription subscription = Subscription.builder()
+                .name(name)
+                .creator(creator)
+                .build();
+        return subscriptionRepository.save(subscription);
+    }
 }
