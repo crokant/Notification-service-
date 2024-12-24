@@ -1,12 +1,10 @@
 package com.icispp.notificationservice.services;
 
-import com.icispp.notificationservice.Entity.EmailDetails;
 import com.icispp.notificationservice.models.Message;
 import com.icispp.notificationservice.models.Subscription;
 import com.icispp.notificationservice.models.User;
 import com.icispp.notificationservice.repositories.MessageRepository;
 import com.icispp.notificationservice.repositories.SubscriptionRepository;
-import com.icispp.notificationservice.services.EmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
