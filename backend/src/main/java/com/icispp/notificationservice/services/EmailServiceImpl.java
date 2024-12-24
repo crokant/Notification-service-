@@ -4,7 +4,6 @@ import com.icispp.notificationservice.Entity.EmailDetails;
 import com.icispp.notificationservice.models.User;
 import com.icispp.notificationservice.models.Message;
 import java.io.File;
-import javax.mail.MessagingException;
 
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
