@@ -6,7 +6,8 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,9 +20,10 @@ public class Subscription {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "manager_id")
-    private Manager manager;
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 
     @ManyToMany(mappedBy = "subscriptions")
-    private Set<User> users;
+    private Set<User> subscribers;
 }
+

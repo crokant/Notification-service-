@@ -12,7 +12,7 @@ const About = () => {
             <ul>
                 <li>Сафронов Илья (fullstack)</li>
                 <li>Жаворонков Виктор (backend + DB manager)</li>
-                <li>Кобецкий Андрей</li>
+                <li>Кобецкий Андрей (backend + product manager)</li>
             </ul>
             <h2>Основные функции:</h2>
             <ul>
