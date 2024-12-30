@@ -23,8 +23,6 @@ jobs:
           POSTGRES_DB: NS_db
           POSTGRES_USER: SA
           POSTGRES_PASSWORD: 'password'
-        networks:
-          - mynetwork
         options: >-
           --health-cmd "pg_isready -U SA"
           --health-interval 10s
