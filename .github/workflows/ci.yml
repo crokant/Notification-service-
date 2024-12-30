@@ -46,9 +46,3 @@ jobs:
           docker-compose -f docker-compose.yml up --build -d
           docker-compose -f docker-compose.yml exec backend ./mvnw test  # Запуск тестов для Spring приложения
           docker-compose -f docker-compose.yml down  # Остановка и удаление контейнеров
-
-      - name: Build React application
-        run: |
-          cd frontend
-          npm install
-          npm run build
