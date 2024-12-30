@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import '../App.css'; // Импортируем стили
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../App.css';
+
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -8,18 +12,30 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setMessage('Пароли не совпадают');
             return;
         }
-        // Здесь вы можете добавить логику для отправки данных на сервер
-        setMessage('Регистрация успешна!'); // Пример успешного сообщения
+
+        const userData = { username: username, email, password };
+
+        try {
+            const response = await axios.post(`${apiUrl}/register`, userData);
+            if (response.status === 200) {
+                setMessage(response.data);
+                //navigate('/personal-office'); // Перенаправление в личный кабинет
+            }
+        } catch (error) {
+            setMessage(error.response?.data || 'Ошибка регистрации');
+        }
     };
 
     return (
-        <div className="register-container">
+        <div className="container">
             <h1>Регистрация</h1>
             <form onSubmit={handleSubmit}>
                 <div>

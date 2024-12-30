@@ -3,7 +3,7 @@ import '../App.css';
 
 const About = () => {
     return (
-        <div className="hello-container">
+        <div className="container">
             <h1>Добро пожаловать в наш проект!</h1>
             <p>
                 Этот проект выполнен как решение проектной практики в МИФИ.
@@ -12,7 +12,7 @@ const About = () => {
             <ul>
                 <li>Сафронов Илья (fullstack)</li>
                 <li>Жаворонков Виктор (backend + DB manager)</li>
-                <li>Кобецкий Андрей</li>
+                <li>Кобецкий Андрей (backend + product manager)</li>
             </ul>
             <h2>Основные функции:</h2>
             <ul>

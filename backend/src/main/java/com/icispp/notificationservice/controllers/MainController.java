@@ -37,6 +37,8 @@ public class MainController {
         this.userService = userService;
     }
 
+
+
     @GetMapping("/hello")
     public Map<String, String> hello(@RequestHeader(value = "Origin", required = false) String origin) {
         logger.info("Received request from origin: {}", origin);

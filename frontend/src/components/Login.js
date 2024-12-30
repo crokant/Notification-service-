@@ -1,32 +1,60 @@
-import React, { useState } from 'react';
-import '../App.css'; // Импортируем стили
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext'; // Импортируем контекст
+import '../App.css';
+
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+    const { setIsAuthenticated } = useContext(AuthContext); // Получаем функцию для обновления состояния авторизации
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Здесь вы можете добавить логику для проверки данных на сервере
-        if (email && password) {
-            setMessage('Вход успешен!'); // Пример успешного сообщения
+        if (username && password) {
+            try {
+                const response = await fetch(`${apiUrl}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                if (response.status === 200) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.token); // Сохраняем токен
+                    setIsAuthenticated(true); // Обновляем состояние авторизации
+                    setMessage('Вы успешно вошли!');
+                    navigate('/personal-office'); // Перенаправление в личный кабинет
+                } else if (response.status === 401) {
+                    const errorMessage = await response.text();
+                    setMessage('Ошибка входа. Сервер описал проблему так: ' + errorMessage);
+                } else {
+                    setMessage('Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.');
+                }
+            } catch (error) {
+                setMessage('Ошибка сети. Пожалуйста, попробуйте позже.');
+            }
         } else {
             setMessage('Пожалуйста, заполните все поля.');
         }
     };
 
     return (
-        <div className="register-container">
+        <div className="container">
             <h1>Вход</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>
-                        Email:
+                        Имя пользователя:
                         <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                     </label>

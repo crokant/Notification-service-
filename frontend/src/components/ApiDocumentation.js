@@ -3,7 +3,7 @@ import '../App.css'; // Импортируем стили
 
 const ApiDocumentation = () => {
     return (
-        <div className="api-container">
+        <div className="container">
             <h1>Документация по API</h1>
             <p>Здесь вы можете найти информацию о доступных API-методах вашего приложения.</p>
             <h2>Методы API</h2>
