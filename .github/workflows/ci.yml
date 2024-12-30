@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # Укажите вашу версию JDK
+          distribution: 'adopt'  # Укажите дистрибуцию, например, 'adopt', 'zulu', 'temurin', и т.д.
+
+      - name: Install Maven
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y maven  # Установка Maven
+
+      - name: Check Java version
+        run: java -version  # Проверка установленной версии Java
+
+      - name: Check Maven version
+        run: mvn -version  # Проверка установленной версии Maven
+
+      - name: Build and test with Maven
+        run: |
+          cd backend  # Переход в поддиректорию backend
+          mvn clean install  # Запуск тестов для Spring приложения
