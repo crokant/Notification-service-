@@ -3,49 +3,39 @@ name: CI
 on:
   push:
     branches:
-      - main  # Основная ветка
-      - dev    # Ветка разработки
+      - main
+      - dev
   pull_request:
     branches:
-      - main  # Для pull request в основную ветку
-      - dev    # Для pull request в ветку разработки
+      - main
+      - dev
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:latest
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: NS_db
-          POSTGRES_USER: SA
-          POSTGRES_PASSWORD: 'password'
-        networks:
-          - mynetwork
-        options: >-
-          --health-cmd "pg_isready -U SA"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # Укажите вашу версию JDK
+          distribution: 'adopt'  # Укажите дистрибуцию, например, 'adopt', 'zulu', 'temurin', и т.д.
 
-      - name: Build and run Docker containers
+      - name: Install Maven
         run: |
-          docker-compose -f docker-compose.yml up --build -d
-          docker-compose -f docker-compose.yml exec backend ./mvnw test  # Запуск тестов для Spring приложения
-          docker-compose -f docker-compose.yml down  # Остановка и удаление контейнеров
+          sudo apt-get update
+          sudo apt-get install -y maven  # Установка Maven
 
-      - name: Build React application
+      - name: Check Java version
+        run: java -version  # Проверка установленной версии Java
+
+      - name: Check Maven version
+        run: mvn -version  # Проверка установленной версии Maven
+
+      - name: Build and test with Maven
         run: |
-          cd frontend
-          npm install
-          npm run build
+          cd backend  # Переход в поддиректорию backend
+          mvn clean install  # Запуск тестов для Spring приложения
