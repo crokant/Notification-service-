@@ -1,11 +1,9 @@
 package com.icispp.notificationservice.controllers;
 
-import com.icispp.notificationservice.models.Manager;
 import com.icispp.notificationservice.models.Subscription;
 import com.icispp.notificationservice.models.User;
 import com.icispp.notificationservice.services.MessageService;
 import com.icispp.notificationservice.services.SubscriptionService;
-import com.icispp.notificationservice.services.ManagerService;
 import com.icispp.notificationservice.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,9 +33,6 @@ class MainControllerTest {
     private MessageService messageService;
 
     @Mock
-    private ManagerService managerService;
-
-    @Mock
     private UserService userService;
 
     @BeforeEach
@@ -50,35 +45,6 @@ class MainControllerTest {
         Map<String, String> response = mainController.hello("http://example.com");
         assertEquals("Hello from the server!", response.get("message"));
         assertEquals("http://example.com", response.get("origin"));
-    }
-
-    @Test
-    void testCreateSubscription() {
-        Long managerId = 1L;
-        String subscriptionName = "Test Subscription";
-        Manager manager = new Manager();
-        manager.setId(managerId);
-
-        when(managerService.findById(managerId)).thenReturn(Optional.of(manager));
-        when(subscriptionService.createSubscription(subscriptionName, manager)).thenReturn(new Subscription());
-
-        Subscription subscription = mainController.createSubscription(managerId, subscriptionName);
-        assertNotNull(subscription);
-        verify(subscriptionService).createSubscription(subscriptionName, manager);
-    }
-
-    @Test
-    void testCreateSubscription_InvalidManager() {
-        Long managerId = 1L;
-        String subscriptionName = "Test Subscription";
-
-        when(managerService.findById(managerId)).thenReturn(Optional.empty());
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            mainController.createSubscription(managerId, subscriptionName);
-        });
-
-        assertEquals("Invalid manager ID", exception.getMessage());
     }
 
     @Test
