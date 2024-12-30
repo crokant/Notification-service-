@@ -21,8 +21,11 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'  # Укажите вашу версию JDK
-          distribution: 'adopt'  # Укажите дистрибуцию, например, 'adopt', 'zulu', 'temurin', 'oracle', и т.д.
+          java-version: 17  # Используйте переменную окружения или секрет
+          distribution: 'adopt'  # Укажите дистрибуцию, например, 'adopt', 'zulu', 'temurin', и т.д.
+
+      - name: Check Java version
+        run: java -version  # Проверка установленной версии Java
 
       - name: Build and test with Maven
         run: |
