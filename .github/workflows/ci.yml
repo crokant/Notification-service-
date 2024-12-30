@@ -18,18 +18,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check for running containers
-        run: |
-          echo "Checking for running containers..."
-          docker ps -q | xargs -r docker stop  # Остановить все запущенные контейнеры
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'  # Укажите вашу версию JDK
+          distribution: 'adopt'  # Укажите дистрибуцию, например, 'adopt', 'zulu', 'temurin', 'oracle', и т.д.
 
-      - name: Install Docker and Docker Compose
+      - name: Build and test with Maven
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
-      - name: Build and run Docker containers
-        run: |
-          docker-compose -f docker-compose.yml up --build -d
-          docker-compose -f docker-compose.yml exec backend ./mvnw test -q  # Запуск тестов для Spring приложения
-          docker-compose -f docker-compose.yml down  # Остановка и удаление контейнеров
+          ./mvnw clean install  # Или просто mvn clean install, если у вас установлен Maven
