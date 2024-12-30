@@ -3,40 +3,27 @@ name: CI
 on:
   push:
     branches:
-      - main  # Основная ветка
-      - dev    # Ветка разработки
+      - main
+      - dev
   pull_request:
     branches:
-      - main  # Для pull request в основную ветку
-      - dev    # Для pull request в ветку разработки
+      - main
+      - dev
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:latest
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: NS_db
-          POSTGRES_USER: SA
-          POSTGRES_PASSWORD: 'password'
-        options: >-
-          --health-cmd "pg_isready -U SA"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Check for running containers
+        run: |
+          echo "Checking for running containers..."
+          docker ps -q | xargs -r docker stop  # Остановить все запущенные контейнеры
 
-      - name: Install Docker Compose
+      - name: Install Docker and Docker Compose
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
@@ -44,5 +31,5 @@ jobs:
       - name: Build and run Docker containers
         run: |
           docker-compose -f docker-compose.yml up --build -d
-          docker-compose -f docker-compose.yml exec backend ./mvnw test -q  # Запуск тестов для Spring приложения с флагом quiet
+          docker-compose -f docker-compose.yml exec backend ./mvnw test -q  # Запуск тестов для Spring приложения
           docker-compose -f docker-compose.yml down  # Остановка и удаление контейнеров
