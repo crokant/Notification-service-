@@ -44,5 +44,5 @@ jobs:
       - name: Build and run Docker containers
         run: |
           docker-compose -f docker-compose.yml up --build -d
-          docker-compose -f docker-compose.yml exec backend ./mvnw test  # Запуск тестов для Spring приложения
+          docker-compose -f docker-compose.yml exec backend ./mvnw test -q  # Запуск тестов для Spring приложения с флагом quiet
           docker-compose -f docker-compose.yml down  # Остановка и удаление контейнеров
