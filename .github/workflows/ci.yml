@@ -21,12 +21,23 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: 17  # Используйте переменную окружения или секрет
+          java-version: '17'  # Укажите вашу версию JDK
           distribution: 'adopt'  # Укажите дистрибуцию, например, 'adopt', 'zulu', 'temurin', и т.д.
+
+      - name: Install Maven
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y maven  # Установка Maven
 
       - name: Check Java version
         run: java -version  # Проверка установленной версии Java
 
+      - name: Check Maven version
+        run: mvn -version  # Проверка установленной версии Maven
+
+      - name: Make Maven wrapper executable
+        run: chmod +x ./mvnw  # Установите права на выполнение для Maven wrapper
+
       - name: Build and test with Maven
         run: |
-          ./mvnw clean install  # Или просто mvn clean install, если у вас установлен Maven
+          ./mvnw clean install  # Запуск тестов для Spring приложения
