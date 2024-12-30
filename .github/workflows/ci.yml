@@ -40,4 +40,4 @@ jobs:
 
       - name: Build and test with Maven
         run: |
-          ./mvnw clean install  # Запуск тестов для Spring приложения
+          mvn clean install  # Запуск тестов для Spring приложения
