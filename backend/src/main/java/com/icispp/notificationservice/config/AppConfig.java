@@ -12,7 +12,7 @@ public class AppConfig {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.forLanguageTag("ru")); // Установите язык по умолчанию
+        slr.setDefaultLocale(Locale.forLanguageTag("ru"));
         return slr;
     }
 }

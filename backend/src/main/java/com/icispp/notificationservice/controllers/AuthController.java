@@ -18,15 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * Контроллер для аутентификации пользователей.
+ * Предоставляет методы для регистрации и входа в систему.
+ */
 @RestController
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager; // Менеджер аутентификации
+    private final JwtUtil jwtUtil; // Утилита для работы с JWT
+    private final UserService userService; // Сервис для работы с пользователями
 
-    private final JwtUtil jwtUtil;
-
-    private final UserService userService;
-
+    /**
+     * Конструктор класса AuthController.
+     *
+     * @param authenticationManager Менеджер аутентификации
+     * @param jwtUtil Утилита для работы с JWT
+     * @param userService Сервис для работы с пользователями
+     */
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService userService) {
         this.authenticationManager = authenticationManager;
@@ -34,22 +43,43 @@ public class AuthController {
         this.userService = userService;
     }
 
+    /**
+     * Регистрация нового пользователя.
+     * Проверяет, существует ли пользователь с указанным именем.
+     * Если существует, возвращает статус 409 (Conflict).
+     * Если регистрация успешна, возвращает статус 200 (OK).
+     * В случае ошибки возвращает статус 400 (Bad Request).
+     *
+     * @param request Запрос на регистрацию, содержащий имя пользователя, email и пароль
+     * @return ResponseEntity с сообщением о результате регистрации
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+        if (userService.wasUsernameUsed(request.getUsername())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Пользователь с таким именем уже существует");
+        }
         try {
             userService.registerUser(request.getUsername(), request.getEmail(), request.getPassword());
-            System.out.println("Пользователь успешно зарегистрирован" + request.getUsername() + " " + request.getEmail() + " " + request.getPassword());    
-
+            System.out.println("Пользователь успешно зарегистрирован: " + request.getUsername() + " " + request.getEmail());
             return ResponseEntity.ok("Пользователь успешно зарегистрирован");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ошибка регистрации: " + e.getMessage());
         }
     }
 
+    /**
+     * Вход пользователя в систему.
+     * Проверяет учетные данные пользователя и, если они верны, генерирует JWT токен.
+     * В случае успешной аутентификации возвращает статус 200 (OK) с токеном.
+     * Если аутентификация не удалась, возвращает статус 401 (Unauthorized).
+     *
+     * @param authRequest Запрос на аутентификацию, содержащий имя пользователя и пароль
+     * @return ResponseEntity с JWT токеном или сообщением об ошибке
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         try {
-            System.out.println(authRequest.getUsername() + " " + authRequest.getPassword());  
+            System.out.println(authRequest.getUsername() + " " + authRequest.getPassword());
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
@@ -57,12 +87,7 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse(token));
         } catch (Exception e) {
             e.printStackTrace();
-//            System.out.println(e.getMessage() + e.sta);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверные учетные данные");
         }
     }
-
 }
-
-
-

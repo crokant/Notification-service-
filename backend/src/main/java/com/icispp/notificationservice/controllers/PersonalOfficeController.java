@@ -2,6 +2,7 @@ package com.icispp.notificationservice.controllers;
 
 
 import com.icispp.notificationservice.dto.UserInfoResponse;
+import com.icispp.notificationservice.models.Subscription;
 import com.icispp.notificationservice.models.User;
 import com.icispp.notificationservice.services.UserService;
 import com.icispp.notificationservice.util.JwtUtil;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -42,4 +44,22 @@ public class PersonalOfficeController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный токен или пользователь не найден.");
     }
+
+    @GetMapping("/mailings")
+    public ResponseEntity<?> getMailings(HttpServletRequest request){
+        String token = jwtUtil.resolveToken(request);
+        if (token != null && jwtUtil.validateToken(token)) {
+            String username = jwtUtil.getUsernameFromToken(token);
+
+            Optional<User> userOptional = userService.findByName(username);
+            if (userOptional.isPresent()) {
+                List<Subscription> mailings = userService.getUserSubscriptions(username);
+
+                return ResponseEntity.ok(mailings);
+            }
+
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверный токен или пользователь не найден.");
+    }
+
 }

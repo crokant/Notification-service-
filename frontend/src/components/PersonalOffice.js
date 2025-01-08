@@ -11,39 +11,35 @@ const PersonalOffice = () => {
     const navigate = useNavigate();
     const { setIsAuthenticated } = useContext(AuthContext);
 
-    // Проверка наличия токена при загрузке компонента
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
-            // Если токена нет, перенаправляем на страницу входа
             navigate('/login');
         } else {
-            // Если токен есть, загружаем данные пользователя и рассылок
             fetchData();
         }
     }, [navigate]);
 
-    // Загрузка информации о пользователе и рассылках
     const fetchData = async () => {
         try {
-            // Получаем информацию о пользователе
             const userResponse = await fetchWithAuth('api/user/info', { method: 'GET' });
             if (userResponse.ok) {
                 const userData = await userResponse.json();
                 setUserInfo(userData);
             } else if (userResponse.status === 401) {
-                // Если токен недействителен, перенаправляем на страницу входа
                 localStorage.removeItem('token');
                 navigate('/login');
             } else {
                 console.error('Ошибка при загрузке информации о пользователе:', userResponse.status);
             }
 
-            // Получаем список рассылок
-            const mailingsResponse = await fetchWithAuth('api/mailings', { method: 'GET' });
+            const mailingsResponse = await fetchWithAuth('api/user/mailings', { method: 'GET' });
             if (mailingsResponse.ok) {
                 const mailingsData = await mailingsResponse.json();
                 setMailings(mailingsData);
+            } else if (mailingsResponse.status === 401) {
+                localStorage.removeItem('token');
+                navigate('/login');
             } else {
                 console.error('Ошибка при загрузке списка рассылок:', mailingsResponse.status);
             }
@@ -54,17 +50,17 @@ const PersonalOffice = () => {
         }
     };
 
-    // Обработчик отправки формы для создания новой рассылки
     const handleCreateMailing = async (e) => {
         e.preventDefault();
         try {
+
             // Преобразуем список почт в массив
             const emailsArray = newMailing.emails
                 .split(/[\s,]+/) // Разделяем по пробелам или запятым
                 .filter((email) => email.trim() !== ''); // Убираем пустые строки
 
             // Отправляем данные на сервер
-            const response = await postWithAuth('api/mailings', {
+            const response = await postWithAuth('/api/subscriptions/create', {
                 ...newMailing,
                 emails: emailsArray, // Отправляем массив почт
             });

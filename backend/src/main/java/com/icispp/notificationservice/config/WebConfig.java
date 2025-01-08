@@ -13,10 +13,10 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // Укажите адрес вашего фронтенда
+                        .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*") // Разрешить все заголовки
-                        .allowCredentials(true); // Разрешить отправку куки
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

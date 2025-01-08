@@ -25,12 +25,16 @@ const Register = () => {
 
         try {
             const response = await axios.post(`${apiUrl}/register`, userData);
+
             if (response.status === 200) {
                 setMessage(response.data);
-                //navigate('/personal-office'); // Перенаправление в личный кабинет
             }
         } catch (error) {
-            setMessage(error.response?.data || 'Ошибка регистрации');
+            if (error.response?.status === 409) {
+                setMessage('Пользователь с таким именем уже существует');
+            } else {
+                setMessage(error.response?.data || 'Ошибка регистрации');
+            }
         }
     };
 

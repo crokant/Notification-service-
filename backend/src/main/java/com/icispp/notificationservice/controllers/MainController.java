@@ -34,7 +34,6 @@ public class MainController {
     public Map<String, String> hello(@RequestHeader(value = "Origin", required = false) String origin) {
         logger.info("Received request from origin: {}", origin);
 
-        // Создаём JSON-ответ
         Map<String, String> response = new HashMap<>();
         response.put("message", "Hello from the server!");
         response.put("origin", origin != null ? origin : "unknown");
@@ -42,14 +41,6 @@ public class MainController {
         return response;
     }
 
-    /*
-        @PostMapping("/managers/{managerId}/createSubscription")
-        public Subscription createSubscription(@PathVariable Long managerId, @RequestParam String subscriptionName) {
-            Manager manager = managerService.findById(managerId)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid manager ID"));
-            return subscriptionService.createSubscription(subscriptionName, manager);
-        }
-    */
     @PostMapping("/subscriptions/{subscriptionId}/addUser")
     public Subscription addUserToSubscription(@PathVariable Long subscriptionId, @RequestParam Long userId) {
         Subscription subscription = subscriptionService.findById(subscriptionId)

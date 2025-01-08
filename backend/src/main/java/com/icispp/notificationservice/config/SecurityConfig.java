@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/register").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/manager/create-registration-link").permitAll()
                         .requestMatchers("/manager/**").hasAuthority("MANAGER")
                         .anyRequest().permitAll()

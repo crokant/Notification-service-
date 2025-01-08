@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext'; // Импортируем контекст
+import { AuthContext } from './AuthContext';
 import '../App.css';
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
@@ -10,7 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
-    const { setIsAuthenticated } = useContext(AuthContext); // Получаем функцию для обновления состояния авторизации
+    const { setIsAuthenticated } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,10 +26,10 @@ const Login = () => {
 
                 if (response.status === 200) {
                     const data = await response.json();
-                    localStorage.setItem('token', data.token); // Сохраняем токен
-                    setIsAuthenticated(true); // Обновляем состояние авторизации
+                    localStorage.setItem('token', data.token);
+                    setIsAuthenticated(true);
                     setMessage('Вы успешно вошли!');
-                    navigate('/personal-office'); // Перенаправление в личный кабинет
+                    navigate('/personal-office');
                 } else if (response.status === 401) {
                     const errorMessage = await response.text();
                     setMessage('Ошибка входа. Сервер описал проблему так: ' + errorMessage);
